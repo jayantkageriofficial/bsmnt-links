@@ -17,16 +17,13 @@ const HomePage: Page = () => {
     React.useState<{ key: string; value: string }>()
   const [loading, setLoading] = React.useState(false)
 
-  const { data: myShortLinks, mutate } = useSWR<LSLink[]>(
-    'my-bsmnt-links',
-    () => {
-      const myBsmntLinksLS = window.localStorage.getItem('my-bsmnt-links')
-      if (myBsmntLinksLS) {
-        return JSON.parse(myBsmntLinksLS) as LSLink[]
-      }
-      return []
+  const { data: myShortLinks, mutate } = useSWR<LSLink[]>('links', () => {
+    const myLinksLS = window.localStorage.getItem('links')
+    if (myLinksLS) {
+      return JSON.parse(myLinksLS) as LSLink[]
     }
-  )
+    return []
+  })
 
   React.useEffect(() => {
     if (successData) {
@@ -35,7 +32,7 @@ const HomePage: Page = () => {
       )
       if (alreadyExists) return
       localStorage.setItem(
-        'my-bsmnt-links',
+        'links',
         JSON.stringify([successData, ...(myShortLinks ?? [])])
       )
       mutate([successData, ...(myShortLinks ?? [])])
@@ -81,7 +78,7 @@ const HomePage: Page = () => {
 
   return (
     <div>
-      <h1>bsmnt URL Shortener</h1>
+      <h1>@jayantkageri URL Shortener</h1>
       <br />
       <p>
         <i>Shorten your URL!</i>
@@ -89,13 +86,11 @@ const HomePage: Page = () => {
         <br />
         Make something like{' '}
         <code>
-          <small>
-            https://basementstudio.notion.site/basement-joins-forces-with-the-DigitalPal-team-379b0b454b63405296d0dea4ee0917d9
-          </small>
+          <small>https://github.com/sponsors/jayantkageri</small>
         </code>{' '}
         look like{' '}
         <code>
-          <small>{siteURL.href}sd1plm</small>
+          <small>{siteURL.href}gh-sponsor</small>
         </code>
         .
       </p>
@@ -176,7 +171,7 @@ const HomePage: Page = () => {
       {myShortLinks && (
         <>
           <br />
-          <h2>My bsmnt links:</h2>
+          <h2>My links:</h2>
           <table>
             <thead>
               <tr>

@@ -2,7 +2,6 @@ import { useRouter } from 'next/dist/client/router'
 import NextHead from 'next/head'
 import * as React from 'react'
 
-import { useMedia } from '~/hooks/use-media'
 import { defaultMeta, siteOrigin } from '~/lib/constants'
 
 type BasicMeta = {
@@ -21,7 +20,6 @@ export type MetaProps = BasicMeta
 
 export const Meta = (props: MetaProps) => {
   const router = useRouter()
-  const isDark = useMedia('(prefers-color-scheme: dark)')
 
   const resolvedMetadata = React.useMemo(() => {
     const data = {
@@ -65,11 +63,6 @@ export const Meta = (props: MetaProps) => {
         />
         <meta name="theme-color" content={props.themeColor ?? '#000000'} />
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link
-          rel="icon"
-          href={isDark ? '/favicon-dark.svg' : '/favicon.svg'}
-          type="image/svg+xml"
-        />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.webmanifest" />
 
