@@ -18,11 +18,21 @@ const HomePage: Page = () => {
   const [loading, setLoading] = React.useState(false)
 
   const { data: myShortLinks, mutate } = useSWR<LSLink[]>('links', () => {
-    const myLinksLS = window.localStorage.getItem('links')
-    if (myLinksLS) {
-      return JSON.parse(myLinksLS) as LSLink[]
-    }
-    return []
+    let successData: LSLink[] | [] | undefined = undefined
+    const req = fetch('/api/links', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    req.then(async (res) => {
+      const result = await res.json()
+      successData = result.successData
+      localStorage.setItem('links', JSON.stringify(successData))
+    })
+
+    return successData ?? JSON.parse(localStorage.getItem('links') ?? '[]')
   })
 
   React.useEffect(() => {

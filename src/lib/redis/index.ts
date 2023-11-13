@@ -66,3 +66,22 @@ export async function getShortLinkValue(key: string) {
 
   return result
 }
+
+export async function getAllShortLink() {
+  const redisUrlClone = new URL(redisUrl)
+  redisUrlClone.pathname = '/keys/*'
+
+  const keys = await fetch(redisUrlClone.href, {
+    headers: { Authorization: `Bearer ${redisWriteToken}` }
+  })
+
+  const { result } = (await keys.json()) as { result: string[] }
+  const data: { key: string; value: string }[] = []
+  for (let i = 0; i < result.length; i++) {
+    const key = result[i]
+    const value = await getShortLinkValue(key)
+    data.push({ key, value })
+  }
+
+  return data
+}
