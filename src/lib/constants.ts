@@ -35,12 +35,12 @@ export const basementLog = `
 
 // TODO: update this data
 export const defaultMeta = {
-  title: 'next-typescript | basement.studio',
-  description: `A minimalist's boilerplate — Next.js with TypeScript.`,
+  title: 'Jayant Hegde Kageri',
+  description: `Nothing is Easy in life when you aren't interested. | Developer from India`,
   ogImage: `${siteOrigin}/og.png`,
   twitter: {
-    handle: '@basementstudio',
-    site: '@basementstudio'
+    handle: '@jayantkageri',
+    site: 'https://jayantkageri.in'
   }
 }
 
