@@ -140,7 +140,7 @@ const HomePage: Page = ({ links }) => {
       )}
       <br />
       <form onSubmit={handleSubmit}>
-        <h2>Enter a new URL to shorten</h2>
+        <h2>Shorten a new URL</h2>
         <fieldset>
           <label htmlFor="url">
             URL <i>*</i>
