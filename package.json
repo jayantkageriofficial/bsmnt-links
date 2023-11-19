@@ -11,7 +11,7 @@
     "build": "next build",
     "build:analyze": "cross-env ANALYZE=true yarn build",
     "postbuild": "next-sitemap",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx && stylelint '**/*.{css,scss}'",
     "tsc": "tsc --pretty --noEmit"
   },
