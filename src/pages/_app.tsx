@@ -15,6 +15,7 @@ import {
   isProd
 } from '~/lib/constants'
 import { GAScripts, useAppGA } from '~/lib/ga'
+import { LSLink } from '~/pages/index'
 
 // TODO delete this basement log if not a basement project.
 if (isProd && isClient) {
@@ -26,7 +27,7 @@ export type Page<P = Record<string, unknown>> = NextComponentType<
   NextPageContext,
   Record<string, unknown>,
   P
-> & { getLayout?: GetLayoutFn<P> }
+> & { getLayout?: GetLayoutFn<P>; links?: LSLink[] }
 
 export type GetLayoutFn<P = Record<string, unknown>> = (
   props: Omit<AppProps<P>, 'pageProps'> & { pageProps: P }

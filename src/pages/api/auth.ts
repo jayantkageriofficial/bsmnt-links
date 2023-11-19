@@ -1,7 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default function handler(_: NextApiRequest, res: NextApiResponse) {
-  res.setHeader('WWW-authenticate', 'Basic realm="Secure Area"')
+  res.setHeader('WWW-authenticate', "Basic realm='Secure Area'")
   res.statusCode = 401
-  res.end(`401 Unauthorized - Authentication Required`)
+  res.setHeader('Content-Type', 'text/html')
+  res.end(
+    '<html lang=en class=fonts-loaded><head><meta charset=utf-8><meta name=viewport content="width=device-width"><style>@font-face{font-family:Inter;font-weight:100 900;font-display:block;font-style:normal;font-named-instance:"Regular";src:url("/fonts/inter/Inter-roman.var.woff2") format("woff2")}@font-face{font-family:Inter;font-weight:100 900;font-display:block;font-style:italic;font-named-instance:"Italic";src:url("/fonts/inter/Inter-italic.var.woff2") format("woff2")}</style><style>html{color-scheme:dark}html.fonts-loaded body{opacity:1!important}</style><style>:root{--nc-font-sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";--nc-font-mono:Consolas,monaco,"Ubuntu Mono","Liberation Mono","Courier New",Courier,monospace;--nc-tx-1:#000000;--nc-tx-2:#1A1A1A;--nc-bg-1:#FFFFFF;--nc-bg-2:#F6F8FA;--nc-bg-3:#E5E7EB;--nc-lk-1:#0070F3;--nc-lk-2:#0366D6;--nc-lk-tx:#FFFFFF;--nc-ac-1:#79FFE1;--nc-ac-tx:#0C4047}@media (prefers-color-scheme:dark){:root{--nc-tx-1:#ffffff;--nc-tx-2:#eeeeee;--nc-bg-1:#000000;--nc-bg-2:#111111;--nc-bg-3:#222222;--nc-lk-1:#3291FF;--nc-lk-2:#0070F3;--nc-lk-tx:#FFFFFF;--nc-ac-1:#7928CA;--nc-ac-tx:#FFFFFF}}*{margin:0;padding:0}address,area,article,aside,audio,blockquote,datalist,details,dl,fieldset,figure,form,iframe,img,input,meter,nav,ol,optgroup,option,output,p,pre,progress,ruby,section,table,textarea,ul,video{margin-bottom:1rem}button,html,input,select{font-family:var(--nc-font-sans)}body{margin:0 auto;max-width:750px;padding:2rem;border-radius:6px;overflow-x:hidden;word-break:break-word;overflow-wrap:break-word;background:var(--nc-bg-1);color:var(--nc-tx-2);font-size:1.03rem;line-height:1.5}::selection{background:var(--nc-ac-1);color:var(--nc-ac-tx)}</style></head><body><div><p style=font-size:2.4rem;font-weight:700>401 - Unauthorized</p><i>Authentication Required</i></div></body></html>'
+  )
 }

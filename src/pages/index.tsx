@@ -1,3 +1,4 @@
+import { GetServerSideProps } from 'next'
 import * as React from 'react'
 import useSWR from 'swr'
 
@@ -11,28 +12,15 @@ export type LSLink = {
   value: string
 }
 
-const HomePage: Page = () => {
+const HomePage: Page = ({ links }) => {
   const [error, setError] = React.useState('')
   const [successData, setSuccessData] =
     React.useState<{ key: string; value: string }>()
   const [loading, setLoading] = React.useState(false)
 
   const { data: myShortLinks, mutate } = useSWR<LSLink[]>('links', () => {
-    let successData: LSLink[] | [] | undefined = undefined
-    const req = fetch('/api/links', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-
-    req.then(async (res) => {
-      const result = await res.json()
-      successData = result.successData
-      localStorage.setItem('links', JSON.stringify(successData))
-    })
-
-    return successData ?? JSON.parse(localStorage.getItem('links') ?? '[]')
+    localStorage.setItem('links', JSON.stringify(links))
+    return links ?? JSON.parse(localStorage.getItem('links') ?? '[]')
   })
 
   React.useEffect(() => {
@@ -88,7 +76,7 @@ const HomePage: Page = () => {
 
   return (
     <div>
-      <h1>@jayantkageri URL Shortener</h1>
+      <h1>URL Shortener</h1>
       <br />
       <p>
         <i>Shorten your URL!</i>
@@ -213,3 +201,30 @@ const HomePage: Page = () => {
 }
 
 export default HomePage
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const auth = ctx.req.headers.authorization
+
+  if (auth) {
+    const req = await fetch(`${siteURL.href}/api/links`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: auth
+      }
+    })
+    const res = await req.json()
+
+    return {
+      props: {
+        links: res.successData
+      }
+    }
+  }
+
+  return {
+    props: {
+      links: []
+    }
+  }
+}
