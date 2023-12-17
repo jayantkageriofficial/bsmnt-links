@@ -10,13 +10,13 @@ const redisReadToken = process.env.REDIS_REST_TOKEN_READ
 if (!redisReadToken) throw new Error('REDIS_REST_TOKEN_READ is not set.')
 
 export async function createShortLink(original: string, suggestion?: string) {
-  const key = suggestion || nanoid(6)
+  const key = suggestion.toLowerCase() || nanoid(6)
   const originalUrl = new URL(original)
 
   const redisUrlClone = new URL(redisUrl)
 
   if (suggestion) {
-    redisUrlClone.pathname = `/get/${key}`
+    redisUrlClone.pathname = `/get/${key.toLowerCase()}`
     const redisRes = await fetch(redisUrlClone.href, {
       headers: { Authorization: `Bearer ${redisReadToken}` }
     })
@@ -52,7 +52,7 @@ export async function createShortLink(original: string, suggestion?: string) {
 
 export async function getShortLinkValue(key: string) {
   const redisUrlClone = new URL(redisUrl)
-  redisUrlClone.pathname = `/get/${key}`
+  redisUrlClone.pathname = `/get/${key.toLowerCase()}`
 
   const redisRes = await fetch(redisUrlClone.href, {
     headers: { Authorization: `Bearer ${redisReadToken}` }
