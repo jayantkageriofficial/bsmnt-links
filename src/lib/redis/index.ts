@@ -10,7 +10,7 @@ const redisReadToken = process.env.REDIS_REST_TOKEN_READ
 if (!redisReadToken) throw new Error('REDIS_REST_TOKEN_READ is not set.')
 
 export async function createShortLink(original: string, suggestion?: string) {
-  const key = suggestion.toLowerCase() || nanoid(6)
+  const key = suggestion?.toLowerCase() || nanoid(6)
   const originalUrl = new URL(original)
 
   const redisUrlClone = new URL(redisUrl)

@@ -7,7 +7,7 @@ const IdPage = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const key = ctx.params?.key
+  const key = ctx.params?.key?.toString().toLowerCase()
 
   if (typeof key !== 'string') {
     return { notFound: true }
